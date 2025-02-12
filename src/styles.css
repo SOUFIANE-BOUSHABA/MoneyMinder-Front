@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+@layer components {
+  .sidebar-icon {
+    @apply w-6 h-6 text-gray-500;
+  }
+
+  .nav-link {
+    @apply flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors;
+  }
+
+  .nav-link.active {
+    @apply bg-primary-50 text-primary-600;
+  }
+}
