@@ -1,32 +1,31 @@
-// src/app/pages/auth/register/register.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { register } from '../../../store/auth/auth.actions';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
-  templateUrl:'register.component.html'
+  templateUrl: 'register.component.html',
 })
 export class RegisterComponent {
-  firstName: string = '';
-  lastName: string = '';
-  email: string = '';
-  company: string = '';
-  password: string = '';
-  confirmPassword: string = '';
-  acceptTerms: boolean = false;
+  firstName = '';
+  lastName = '';
+  email = '';
+  password = '';
+  confirmPassword = '';
+  acceptTerms = false;
 
-  constructor(private router: Router) {}
+  constructor(private store: Store, private router: Router) {}
 
   isFormValid(): boolean {
     return (
       this.firstName.trim() !== '' &&
       this.lastName.trim() !== '' &&
       this.email.trim() !== '' &&
-      this.company.trim() !== '' &&
       this.password.trim() !== '' &&
       this.password === this.confirmPassword &&
       this.acceptTerms
@@ -34,17 +33,20 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    if (this.isFormValid()) {
-      // Here you would typically call your registration service
-      console.log('Registration attempt:', {
+    if (!this.isFormValid()) {
+      alert('Please fill all fields correctly and accept the terms.');
+      return;
+    }
+
+    this.store.dispatch(
+      register({
+        email: this.email,
+        password: this.password,
         firstName: this.firstName,
         lastName: this.lastName,
-        email: this.email,
-        company: this.company
-      });
+      })
+    );
 
-      // For demo purposes, navigate to login
-      this.router.navigate(['/login']);
-    }
+    this.router.navigate(['/login']);
   }
 }
