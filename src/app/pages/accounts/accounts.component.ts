@@ -1,67 +1,189 @@
-// src/app/pages/account/account.component.ts
-import { Component } from '@angular/core';
+
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-
-interface Account {
-  id: string;
-  name: string;
-  balance: number;
-  type: 'Checking' | 'Savings' | 'Investment';
-  status: 'Active' | 'Inactive' | 'Frozen';
-  lastTransaction: string;
-}
-
-interface Transaction {
-  id: string;
-  date: string;
-  description: string;
-  amount: number;
-  type: 'Credit' | 'Debit';
-}
+import { FormsModule } from '@angular/forms';
+import { AccountService } from '../../core/services/account.service';
+import { Account, AccountRequest } from '../../core/models/account.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl:'accounts.component.html'
+  imports: [CommonModule, FormsModule],
+  templateUrl: 'accounts.component.html'
 })
-export class AccountComponent {
-  transactions: Transaction[] = [
-    {
-      id: '1',
-      date: '2024-02-12',
-      description: 'Salary Deposit',
-      amount: 5000,
-      type: 'Credit'
-    },
-    {
-      id: '2',
-      date: '2024-02-11',
-      description: 'Online Purchase - Amazon',
-      amount: 129.99,
-      type: 'Debit'
-    },
-    {
-      id: '3',
-      date: '2024-02-11',
-      description: 'Restaurant Payment',
-      amount: 45.50,
-      type: 'Debit'
-    },
-    {
-      id: '4',
-      date: '2024-02-10',
-      description: 'Investment Return',
-      amount: 350.25,
-      type: 'Credit'
-    },
-    {
-      id: '5',
-      date: '2024-02-10',
-      description: 'Utility Bill Payment',
-      amount: 85.00,
-      type: 'Debit'
+export class AccountComponent implements OnInit {
+
+
+
+
+  allAccounts: Account[] = [];
+  featuredAccounts: Account[] = [];
+  showAddForm = false;
+  isEditing = false;
+
+  selectedAccount: AccountRequest = {
+    accountName: '',
+    balance: 0
+  };
+
+  editingId?: number;
+
+
+
+
+  constructor(private accountService: AccountService) {}
+
+  ngOnInit() {
+    this.loadAccounts();
+  }
+
+  loadAccounts() {
+    this.accountService.getAllAccounts().subscribe({
+      next: (accounts) => {
+        this.allAccounts = accounts;
+        this.updateFeaturedAccounts();
+      },
+      error: (error) => {
+        this.showToast('error','Error loading accounts');
+      }
+    });
+  }
+
+
+
+  updateFeaturedAccounts() {
+    this.featuredAccounts = this.getRandomAccounts(this.allAccounts, 3);
+  }
+
+  getRandomAccounts(accounts: Account[], count: number): Account[] {
+    const shuffled = [...accounts].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  }
+
+  generateFakeCardNumber(): string {
+    return '**** **** **** ' + Math.floor(1000 + Math.random() * 9000).toString();
+  }
+
+  generateFakeExpDate(): string {
+    const month = Math.floor(1 + Math.random() * 12).toString().padStart(2, '0');
+    const year = (new Date().getFullYear() + Math.floor(1 + Math.random() * 5)).toString().slice(-2);
+    return `${month}/${year}`;
+  }
+
+
+
+  toggleAddForm() {
+    this.showAddForm = !this.showAddForm;
+    this.isEditing = false;
+    this.resetForm();
+  }
+
+
+
+
+  resetForm() {
+    this.selectedAccount = {
+      accountName: '',
+      balance: 0
+    };
+    this.editingId = undefined;
+  }
+
+
+
+
+
+  saveAccount() {
+    if (this.isEditing && this.editingId) {
+      this.accountService.updateAccount(this.editingId, this.selectedAccount).subscribe({
+        next: () => {
+          this.showToast('success','Account updated successfully');
+          this.loadAccounts();
+          this.toggleAddForm();
+        },
+        error: () => {
+          this.showToast('error','Error updating account');
+        }
+      });
+    } else {
+
+
+
+      this.accountService.createAccount(this.selectedAccount).subscribe({
+        next: () => {
+          this.showToast('success','Account created successfully');
+          this.loadAccounts();
+          this.toggleAddForm();
+        },
+        error: () => {
+          this.showToast('error','Error creating account');
+        }
+      });
     }
-  ];
+  }
+
+
+
+
+  editAccount(account: Account) {
+    this.isEditing = true;
+    this.editingId = account.id;
+    this.selectedAccount = {
+      accountName: account.accountName,
+      balance: account.balance
+    };
+    this.showAddForm = true;
+  }
+
+
+
+
+  deleteAccount(id: number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+
+
+
+
+      if (result.isConfirmed) {
+        this.accountService.deleteAccount(id).subscribe({
+          next: () => {
+            this.showToast( 'success','Account deleted successfully');
+            this.loadAccounts();
+          },
+          error: () => {
+            this.showToast( 'error','Error deleting account');
+          }
+        });
+      }
+    });
+  }
+
+
+
+
+
+
+
+  showToast(icon: 'success' | 'error' | 'warning', title: string) {
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      icon,
+      title,
+    });
+  }
+
+
 }
