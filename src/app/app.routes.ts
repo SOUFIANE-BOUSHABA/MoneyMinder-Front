@@ -13,6 +13,7 @@ import { AccountComponent } from "./pages/accounts/accounts.component";
 import { SubscriptionRequestComponent } from "./pages/subscription-request/subscription-request.component";
 import { RegisterComponent } from "./pages/auth/register/register.component";
 import { LoginComponent } from "./pages/auth/login/login.component";
+import {CategoryComponent} from "./pages/category/category.component";
 
 export const routes: Routes = [
 
@@ -28,6 +29,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'users', component: UsersComponent },
+      { path: 'categories', component: CategoryComponent },
       { path: 'transactions', component: TransactionsComponent },
       { path: 'invoices', component: InvoicesComponent },
       { path: 'quotes', component: QuotesComponent },

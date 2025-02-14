@@ -12,7 +12,9 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string): Observable<any> {
+    console.log('login  iyh iyh');
     return this.http.post(`${this.apiUrl}/login`, { email, password });
+
   }
 
   register(email: string, password: string, firstName: string, lastName: string): Observable<any> {
@@ -26,4 +28,7 @@ export class AuthService {
       map((response: any) => response.token)
     );
   }
+
+
+
 }
