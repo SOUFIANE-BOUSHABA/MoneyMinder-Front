@@ -14,6 +14,8 @@ import { SubscriptionRequestComponent } from "./pages/subscription-request/subsc
 import { RegisterComponent } from "./pages/auth/register/register.component";
 import { LoginComponent } from "./pages/auth/login/login.component";
 import {CategoryComponent} from "./pages/category/category.component";
+import {UpdateTransactionComponent} from "./pages/transactions/update-transaction/update-transaction.component";
+import {AddTransactionComponent} from "./pages/transactions/add-transaction/add-transaction.component";
 
 export const routes: Routes = [
 
@@ -38,6 +40,8 @@ export const routes: Routes = [
       { path: 'reports', component: ReportsComponent },
       { path: 'subscription', component: SubscriptionComponent },
       { path: 'subscription-request', component: SubscriptionRequestComponent },
+      { path: 'transactions/add', component: AddTransactionComponent },
+      { path: 'transactions/edit/:id', component: UpdateTransactionComponent },
     ]
   }
 ];

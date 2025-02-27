@@ -20,9 +20,7 @@ export class AccountService {
     return this.http.put<Account>(`${this.apiUrl}/${id}`, account);
   }
 
-  getAccountById(id: number): Observable<Account> {
-    return this.http.get<Account>(`${this.apiUrl}/${id}`);
-  }
+
 
   getAllAccounts(): Observable<Account[]> {
     return this.http.get<Account[]>(`${this.apiUrl}/user`);
