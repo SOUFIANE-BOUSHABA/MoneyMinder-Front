@@ -1,0 +1,81 @@
+
+<div class="max-w-2xl mx-auto p-6">
+  <h1 class="text-2xl font-bold mb-6">Update Invoice</h1>
+
+  <form (ngSubmit)="updateInvoice()">
+    <div class="mb-4">
+      <label for="invoiceNumber" class="block text-sm font-medium text-gray-700 mb-1">
+        Invoice Number
+      </label>
+      <input
+        type="text"
+        id="invoiceNumber"
+        name="invoiceNumber"
+        [(ngModel)]="invoiceRequest.invoiceNumber"
+        required
+        class="border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="issueDate" class="block text-sm font-medium text-gray-700 mb-1">
+        Issue Date
+      </label>
+      <input
+        type="date"
+        id="issueDate"
+        name="issueDate"
+        [(ngModel)]="invoiceRequest.issueDate"
+        required
+        class="border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="totalAmount" class="block text-sm font-medium text-gray-700 mb-1">
+        Total Amount
+      </label>
+      <input
+        type="number"
+        id="totalAmount"
+        name="totalAmount"
+        step="0.01"
+        [(ngModel)]="invoiceRequest.totalAmount"
+        required
+        class="border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="status" class="block text-sm font-medium text-gray-700 mb-1">
+        Status
+      </label>
+      <select
+        id="status"
+        name="status"
+        [(ngModel)]="invoiceRequest.status"
+        class="border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option value="PENDING">Pending</option>
+        <option value="PAID">Paid</option>
+        <option value="OVERDUE">Overdue</option>
+      </select>
+    </div>
+
+    <div class="flex justify-end mt-6">
+      <button
+        type="button"
+        (click)="cancel()"
+        class="mr-4 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-md"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+      >
+        Update Invoice
+      </button>
+    </div>
+  </form>
+</div>

@@ -16,6 +16,8 @@ import { LoginComponent } from "./pages/auth/login/login.component";
 import {CategoryComponent} from "./pages/category/category.component";
 import {UpdateTransactionComponent} from "./pages/transactions/update-transaction/update-transaction.component";
 import {AddTransactionComponent} from "./pages/transactions/add-transaction/add-transaction.component";
+import {AddInvoiceComponent} from "./pages/invoices/add-invoice/add-invoice.component";
+import {UpdateInvoiceComponent} from "./pages/invoices/update-invoice/update-invoice.component";
 
 export const routes: Routes = [
 
@@ -34,6 +36,8 @@ export const routes: Routes = [
       { path: 'categories', component: CategoryComponent },
       { path: 'transactions', component: TransactionsComponent },
       { path: 'invoices', component: InvoicesComponent },
+      { path: 'invoices/create', component: AddInvoiceComponent },
+      { path: 'invoices/edit/:id', component: UpdateInvoiceComponent },
       { path: 'quotes', component: QuotesComponent },
       { path: 'payments', component: PaymentsComponent },
       { path: 'account', component: AccountComponent },
@@ -43,5 +47,6 @@ export const routes: Routes = [
       { path: 'transactions/add', component: AddTransactionComponent },
       { path: 'transactions/edit/:id', component: UpdateTransactionComponent },
     ]
+
   }
 ];
