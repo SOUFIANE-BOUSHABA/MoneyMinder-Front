@@ -1,22 +1,19 @@
 <div class="p-6 mt-16">
   <div class="max-w-7xl mx-auto">
-    <!-- Header -->
     <div class="mb-8 flex justify-between items-center">
       <div>
         <h1 class="text-2xl font-bold text-zinc-800">Quotes</h1>
         <p class="text-zinc-600 mt-1">Create and manage your quotes</p>
       </div>
-
       <div class="flex gap-4">
-        <button class="flex items-center gap-2 bg-zinc-100 text-zinc-700 px-4 py-2 rounded-lg hover:bg-zinc-200 transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-          </svg>
-          Export
-        </button>
-        <button class="flex items-center gap-2 bg-zinc-800 text-white px-4 py-2 rounded-lg hover:bg-zinc-700 transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        <button
+          (click)="createQuote()"
+          class="flex items-center gap-2 bg-zinc-800 text-white px-4 py-2 rounded-lg hover:bg-zinc-700 transition-colors"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 4v16m8-8H4" />
           </svg>
           Create Quote
         </button>
@@ -27,145 +24,142 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       <div class="bg-white rounded-xl shadow-sm p-6 border border-zinc-200">
         <h3 class="text-sm font-medium text-zinc-500 mb-4">Total Active Quotes</h3>
-        <p class="text-2xl font-bold text-zinc-800">$45,240.00</p>
+        <p class="text-2xl font-bold text-zinc-800">{{ activeTotal | currency }}</p>
         <div class="mt-4 flex items-center text-zinc-500 text-sm">
-              <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                8 quotes
-              </span>
+          <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+            {{ activeCount }} quotes
+          </span>
         </div>
       </div>
 
       <div class="bg-white rounded-xl shadow-sm p-6 border border-zinc-200">
         <h3 class="text-sm font-medium text-zinc-500 mb-4">Accepted This Month</h3>
-        <p class="text-2xl font-bold text-emerald-600">$28,150.00</p>
+        <p class="text-2xl font-bold text-emerald-600">{{ acceptedThisMonthTotal | currency }}</p>
         <div class="mt-4 flex items-center text-zinc-500 text-sm">
-              <span class="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                5 quotes
-              </span>
+          <span class="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+            {{ acceptedThisMonthCount }} quotes
+          </span>
         </div>
       </div>
+
 
       <div class="bg-white rounded-xl shadow-sm p-6 border border-zinc-200">
         <h3 class="text-sm font-medium text-zinc-500 mb-4">Rejected</h3>
-        <p class="text-2xl font-bold text-red-600">$12,400.00</p>
+        <p class="text-2xl font-bold text-red-600">{{ rejectedTotal | currency }}</p>
         <div class="mt-4 flex items-center text-zinc-500 text-sm">
-              <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                3 quotes
-              </span>
+          <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+            {{ rejectedCount }} quotes
+          </span>
         </div>
       </div>
 
+
       <div class="bg-white rounded-xl shadow-sm p-6 border border-zinc-200">
         <h3 class="text-sm font-medium text-zinc-500 mb-4">Draft</h3>
-        <p class="text-2xl font-bold text-zinc-800">$8,320.00</p>
+        <p class="text-2xl font-bold text-zinc-800">{{ draftTotal | currency }}</p>
         <div class="mt-4 flex items-center text-zinc-500 text-sm">
-              <span class="bg-zinc-100 text-zinc-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                4 quotes
-              </span>
+          <span class="bg-zinc-100 text-zinc-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+            {{ draftCount }} quotes
+          </span>
         </div>
       </div>
     </div>
 
-    <!-- Filters -->
+
     <div class="mb-6 flex flex-wrap gap-4 items-center">
       <div class="relative flex-1 max-w-md">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-400"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
         <input
           type="search"
           placeholder="Search quotes..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="applyFilters()"
           class="w-full pl-10 pr-4 py-2 border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:border-transparent"
         >
       </div>
 
-      <select class="border border-zinc-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-zinc-500">
+      <select [(ngModel)]="selectedStatus" (ngModelChange)="applyFilters()"
+              class="border border-zinc-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-zinc-500">
         <option value="all">All Status</option>
         <option value="draft">Draft</option>
         <option value="sent">Sent</option>
         <option value="accepted">Accepted</option>
         <option value="rejected">Rejected</option>
       </select>
-
-      <button class="flex items-center gap-2 bg-zinc-100 text-zinc-700 px-4 py-2 rounded-lg hover:bg-zinc-200 transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-        </svg>
-        More Filters
-      </button>
     </div>
 
-    <!-- Quotes Table -->
+
     <div class="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
       <table class="w-full">
         <thead>
         <tr class="bg-zinc-50">
-          <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Quote</th>
-          <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Client</th>
-          <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Date</th>
-          <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Valid Until</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Quote #</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Issue Date</th>
           <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Amount</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Payment %</th>
           <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Status</th>
           <th class="px-6 py-3 text-right text-xs font-medium text-zinc-500 uppercase tracking-wider">Actions</th>
         </tr>
         </thead>
         <tbody class="divide-y divide-zinc-200">
-        <tr *ngFor="let quote of quotes" class="hover:bg-zinc-50">
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm font-medium text-zinc-900">#{{quote.id}}</div>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm text-zinc-900">{{quote.client}}</div>
-          </td>
+        <tr *ngFor="let quote of filteredQuotes" class="hover:bg-zinc-50">
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-900">#{{ quote.quoteNumber }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500">
-            {{quote.date}}
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500">
-            {{quote.validUntil}}
+            {{ quote.issueDate | date:'yyyy-MM-dd' }}
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-zinc-900">
-            {{quote.amount | currency}}
+            {{ quote.totalAmount | currency }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-900">
+            {{ quote.paymentPercentage | number:'1.1-1' }}%
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
-                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
-                        [ngClass]="{
-                          'bg-zinc-100 text-zinc-800': quote.status === 'Draft',
-                          'bg-blue-100 text-blue-800': quote.status === 'Sent',
-                          'bg-emerald-100 text-emerald-800': quote.status === 'Accepted',
-                          'bg-red-100 text-red-800': quote.status === 'Rejected'
-                        }">
-                    {{quote.status}}
-                  </span>
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+                    [ngClass]="{
+                      'bg-gray-100 text-gray-800': quote.status === 'DRAFT',
+                      'bg-blue-100 text-blue-800': quote.status === 'SENT',
+                      'bg-emerald-100 text-emerald-800': quote.status === 'ACCEPTED',
+                      'bg-red-100 text-red-800': quote.status === 'REJECTED'
+                    }">
+                {{ quote.status }}
+              </span>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-            <button class="text-zinc-600 hover:text-zinc-900 mr-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+
+            <button class="text-zinc-600 hover:text-zinc-900 mr-4" (click)="downloadPdf(quote.id!)">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
               </svg>
             </button>
-            <button class="text-zinc-600Let me continue from the exact cut-off point">
 
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-            </svg>
+
+            <button class="text-zinc-600 hover:text-zinc-900 mr-4" (click)="editQuote(quote.id!)">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
             </button>
-            <button class="text-zinc-600 hover:text-zinc-900">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+
+            <button class="text-zinc-600 hover:text-zinc-900" (click)="deleteQuote(quote.id!)">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
               </svg>
             </button>
           </td>
         </tr>
         </tbody>
       </table>
-
-      <!-- Pagination -->
-      <div class="bg-white px-4 py-3 border-t border-zinc-200 sm:px-6">
-        <div class="flex items-center justify-between">
-          <!-- Same pagination as in Invoices component -->
-        </div>
-      </div>
     </div>
   </div>
 </div>

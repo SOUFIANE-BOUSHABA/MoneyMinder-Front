@@ -18,6 +18,8 @@ import {UpdateTransactionComponent} from "./pages/transactions/update-transactio
 import {AddTransactionComponent} from "./pages/transactions/add-transaction/add-transaction.component";
 import {AddInvoiceComponent} from "./pages/invoices/add-invoice/add-invoice.component";
 import {UpdateInvoiceComponent} from "./pages/invoices/update-invoice/update-invoice.component";
+import {AddQuoteComponent} from "./pages/quotes/add-quote/add-quote.component";
+import {UpdateQuoteComponent} from "./pages/quotes/update-quote/update-quote.component";
 
 export const routes: Routes = [
 
@@ -39,6 +41,8 @@ export const routes: Routes = [
       { path: 'invoices/create', component: AddInvoiceComponent },
       { path: 'invoices/edit/:id', component: UpdateInvoiceComponent },
       { path: 'quotes', component: QuotesComponent },
+      { path: 'quotes/create', component: AddQuoteComponent },
+      { path: 'quotes/edit/:id', component: UpdateQuoteComponent },
       { path: 'payments', component: PaymentsComponent },
       { path: 'account', component: AccountComponent },
       { path: 'reports', component: ReportsComponent },
