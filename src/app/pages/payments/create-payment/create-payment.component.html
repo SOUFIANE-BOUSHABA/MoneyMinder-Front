@@ -1,0 +1,109 @@
+<div class="max-w-2xl mx-auto p-6">
+  <h1 class="text-2xl font-bold mb-6">Record a Payment</h1>
+
+  <form (ngSubmit)="createPayment()">
+    <div class="mb-4">
+      <label for="amount" class="block text-sm font-medium text-gray-700 mb-1">
+        Amount
+      </label>
+      <input
+        type="number"
+        id="amount"
+        name="amount"
+        [(ngModel)]="paymentRequest.amount"
+        required
+        class="border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="paymentDate" class="block text-sm font-medium text-gray-700 mb-1">
+        Payment Date
+      </label>
+      <input
+        type="date"
+        id="paymentDate"
+        name="paymentDate"
+        [(ngModel)]="paymentRequest.paymentDate"
+        required
+        class="border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+
+    <div class="mb-4">
+      <label for="method" class="block text-sm font-medium text-gray-700 mb-1">
+        Payment Method
+      </label>
+      <select
+        id="method"
+        name="method"
+        [(ngModel)]="paymentRequest.method"
+        class="border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option value="CASH">Cash</option>
+        <option value="CARD">Card</option>
+        <option value="TRANSFER">Transfer</option>
+      </select>
+    </div>
+
+
+    <div class="mb-4">
+      <label for="invoiceSelect" class="block text-sm font-medium text-gray-700 mb-1">
+        Associate with Invoice
+      </label>
+      <select
+        id="invoiceSelect"
+        name="invoiceSelect"
+        [(ngModel)]="selectedInvoiceId"
+        (change)="onInvoiceSelected()"
+        [disabled]="selectedQuoteId !== null"
+        class="border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option [ngValue]="null">-- No Invoice Selected --</option>
+        <option *ngFor="let inv of invoices" [ngValue]="inv.id">
+          #{{ inv.invoiceNumber }} ({{ inv.totalAmount | currency }})
+        </option>
+      </select>
+      <p class="text-xs text-gray-500 mt-1">If you select an invoice, the quote select will be disabled.</p>
+    </div>
+
+
+    <div class="mb-4">
+      <label for="quoteSelect" class="block text-sm font-medium text-gray-700 mb-1">
+        Associate with Quote
+      </label>
+      <select
+        id="quoteSelect"
+        name="quoteSelect"
+        [(ngModel)]="selectedQuoteId"
+        (change)="onQuoteSelected()"
+        [disabled]="selectedInvoiceId !== null"
+        class="border border-gray-300 rounded-md w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option [ngValue]="null">-- No Quote Selected --</option>
+        <option *ngFor="let q of quotes" [ngValue]="q.id">
+          #{{ q.quoteNumber }} ({{ q.totalAmount | currency }})
+        </option>
+      </select>
+      <p class="text-xs text-gray-500 mt-1">If you select a quote, the invoice select will be disabled.</p>
+    </div>
+
+
+    <div class="flex justify-end mt-6">
+      <button
+        type="button"
+        (click)="cancel()"
+        class="mr-4 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-md"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+      >
+        Create Payment
+      </button>
+    </div>
+  </form>
+</div>
