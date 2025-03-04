@@ -22,6 +22,7 @@ import {AddQuoteComponent} from "./pages/quotes/add-quote/add-quote.component";
 import {UpdateQuoteComponent} from "./pages/quotes/update-quote/update-quote.component";
 import {CreatePaymentComponent} from "./pages/payments/create-payment/create-payment.component";
 import {UpdatePaymentComponent} from "./pages/payments/update-payment/update-payment.component";
+import {GenerateReportComponent} from "./pages/reports/generate-report/generate-report.component";
 
 export const routes: Routes = [
 
@@ -52,6 +53,7 @@ export const routes: Routes = [
 
       { path: 'account', component: AccountComponent },
       { path: 'reports', component: ReportsComponent },
+      { path: 'reports/create', component: GenerateReportComponent },
       { path: 'subscription', component: SubscriptionComponent },
       { path: 'subscription-request', component: SubscriptionRequestComponent },
       { path: 'transactions/add', component: AddTransactionComponent },
