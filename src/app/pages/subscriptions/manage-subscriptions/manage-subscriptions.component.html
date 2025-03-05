@@ -1,0 +1,42 @@
+<div class="p-6 mt-16">
+  <div class="max-w-7xl mx-auto">
+    <h1 class="text-2xl font-bold text-zinc-900 mb-4">Manage Subscription Requests</h1>
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+      <table class="min-w-full divide-y divide-zinc-200">
+        <thead class="bg-zinc-50">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Plan</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Status</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Requested On</th>
+          <th class="px-6 py-3 text-right text-xs font-medium text-zinc-500 uppercase tracking-wider">Actions</th>
+        </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-zinc-200">
+        <tr *ngFor="let sub of subscriptions" class="hover:bg-zinc-50">
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-900">{{ sub.planName }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">
+              <span [ngClass]="{
+                  'bg-yellow-100 text-yellow-800': sub.status === 'PENDING',
+                }" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+                {{ sub.status }}
+              </span>
+          </td>
+
+
+
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500">
+            {{ sub.requestDate ? (sub.requestDate | date:'mediumDate') : 'N/A' }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+            <button *ngIf="sub.status === 'PENDING'" (click)="approve(sub)"
+                    class="text-green-600 hover:text-green-900 mr-2">Approve</button>
+            <button *ngIf="sub.status === 'PENDING'" (click)="reject(sub)"
+                    class="text-red-600 hover:text-red-900">Reject</button>
+            <span *ngIf="sub.status !== 'PENDING'">No actions available</span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -7,10 +7,8 @@ import { TransactionsComponent } from "./pages/transactions/transactions.compone
 import { InvoicesComponent } from "./pages/invoices/invoices.component";
 import { QuotesComponent } from "./pages/quotes/quotes.component";
 import { PaymentsComponent } from "./pages/payments/payments.component";
-import { SubscriptionComponent } from "./pages/subscription/subscription.component";
 import { ReportsComponent } from "./pages/reports/reports.component";
 import { AccountComponent } from "./pages/accounts/accounts.component";
-import { SubscriptionRequestComponent } from "./pages/subscription-request/subscription-request.component";
 import { RegisterComponent } from "./pages/auth/register/register.component";
 import { LoginComponent } from "./pages/auth/login/login.component";
 import {CategoryComponent} from "./pages/category/category.component";
@@ -23,6 +21,8 @@ import {UpdateQuoteComponent} from "./pages/quotes/update-quote/update-quote.com
 import {CreatePaymentComponent} from "./pages/payments/create-payment/create-payment.component";
 import {UpdatePaymentComponent} from "./pages/payments/update-payment/update-payment.component";
 import {GenerateReportComponent} from "./pages/reports/generate-report/generate-report.component";
+import {SubscriptionPlansComponent} from "./pages/subscriptions/subscription-plans/subscription-plans.component";
+import {ManageSubscriptionsComponent} from "./pages/subscriptions/manage-subscriptions/manage-subscriptions.component";
 
 export const routes: Routes = [
 
@@ -40,6 +40,8 @@ export const routes: Routes = [
       { path: 'users', component: UsersComponent },
       { path: 'categories', component: CategoryComponent },
       { path: 'transactions', component: TransactionsComponent },
+      { path: 'transactions/add', component: AddTransactionComponent },
+      { path: 'transactions/edit/:id', component: UpdateTransactionComponent },
       { path: 'invoices', component: InvoicesComponent },
       { path: 'invoices/create', component: AddInvoiceComponent },
       { path: 'invoices/edit/:id', component: UpdateInvoiceComponent },
@@ -54,10 +56,9 @@ export const routes: Routes = [
       { path: 'account', component: AccountComponent },
       { path: 'reports', component: ReportsComponent },
       { path: 'reports/create', component: GenerateReportComponent },
-      { path: 'subscription', component: SubscriptionComponent },
-      { path: 'subscription-request', component: SubscriptionRequestComponent },
-      { path: 'transactions/add', component: AddTransactionComponent },
-      { path: 'transactions/edit/:id', component: UpdateTransactionComponent },
+
+      { path: 'subscription', component: SubscriptionPlansComponent },
+      { path: 'subscription-request', component: ManageSubscriptionsComponent },
     ]
 
   }
