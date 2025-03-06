@@ -38,7 +38,12 @@ export class GenerateReportComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error generating report', err);
-        this.showToast('error', 'Failed to generate report');
+        if (err.error && typeof err.error === 'string' &&
+          err.error.includes('monthly limit')) {
+          this.showToast('error', 'You have reached your monthly limit for free plan. Upgrade to Premium for unlimited reports!');
+        } else {
+          this.showToast('error', 'Failed to generate report');
+        }
       }
     });
   }
