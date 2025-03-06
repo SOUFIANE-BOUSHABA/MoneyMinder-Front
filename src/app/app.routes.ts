@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component'
 
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
-import { UsersComponent } from "./pages/users/users.component";
 import { TransactionsComponent } from "./pages/transactions/transactions.component";
 import { InvoicesComponent } from "./pages/invoices/invoices.component";
 import { QuotesComponent } from "./pages/quotes/quotes.component";
@@ -37,7 +36,6 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'users', component: UsersComponent },
       { path: 'categories', component: CategoryComponent },
       { path: 'transactions', component: TransactionsComponent },
       { path: 'transactions/add', component: AddTransactionComponent },

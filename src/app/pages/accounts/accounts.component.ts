@@ -116,8 +116,12 @@ export class AccountComponent implements OnInit {
           this.loadAccounts();
           this.toggleAddForm();
         },
-        error: () => {
-          this.showToast('error','Error creating account');
+        error: (err) => {
+          if (err.error && typeof err.error === 'string' && err.error.includes('maximum of 2 accounts')) {
+            this.showToast('warning', 'Free plan allows a maximum of 2 accounts. Please upgrade to Premium for more accounts.');
+          } else {
+            this.showToast('error', 'Error creating account');
+          }
         }
       });
     }
@@ -180,6 +184,10 @@ export class AccountComponent implements OnInit {
       showConfirmButton: false,
       timer: 3000,
       timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      },
       icon,
       title,
     });
