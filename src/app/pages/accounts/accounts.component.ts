@@ -174,9 +174,6 @@ export class AccountComponent implements OnInit {
 
 
 
-
-
-
   showToast(icon: 'success' | 'error' | 'warning', title: string) {
     Swal.fire({
       toast: true,

@@ -1,81 +1,241 @@
-<div class="p-6 mt-16">
-  <div class="max-w-7xl mx-auto">
-    <div class="mb-8">
-      <h1 class="text-2xl font-bold text-zinc-800">Dashboard</h1>
-      <p class="text-zinc-600 mt-1">Welcome back, here's your financial overview.</p>
+<div class="min-h-screen  bg-gray-50">
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mb-6  ">
+      <h1 class="text-3xl font-bold text-gray-900">Financial Dashboard</h1>
+      <p class="mt-1 text-gray-600">Overview of your financial performance</p>
     </div>
 
-    <!-- Stats Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-      <div class="bg-white rounded-xl shadow-sm p-5 border border-zinc-200">
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="text-zinc-500 text-sm font-medium">Total Balance</h3>
-          <span class="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded-full">+14%</span>
+
+
+    <div *ngIf="errorMsg" class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+      <div class="flex">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-red-800">Error</h3>
+          <div class="mt-1 text-sm text-red-700">{{ errorMsg }}</div>
+
         </div>
-        <p class="text-2xl font-bold text-zinc-800">$24,500.00</p>
-        <div class="mt-4 flex items-center text-zinc-500 text-sm">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-          </svg>
-          <span class="text-emerald-500 font-medium">3.2%</span>
-          <span class="ml-1">from last month</span>
+      </div>
+    </div>
+
+    <div *ngIf=" !errorMsg">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <div class="p-6">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 bg-emerald-100 rounded-full p-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="1" x2="12" y2="23"></line>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+              </div>
+              <div class="ml-5 w-0 flex-1">
+                <dl>
+                  <dt class="text-sm font-medium text-gray-500 truncate">Total Income</dt>
+                  <dd>
+                    <div class="text-2xl font-semibold text-gray-900">
+                      {{ statistics.incomeExpense && statistics.incomeExpense['INCOME'] !== undefined ?
+                      formatCurrency(statistics.incomeExpense['INCOME']) : '$0.00' }}
+                    </div>
+                  </dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <div class="p-6">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 bg-red-100 rounded-full p-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                  <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                </svg>
+              </div>
+              <div class="ml-5 w-0 flex-1">
+                <dl>
+                  <dt class="text-sm font-medium text-gray-500 truncate">Total Expenses</dt>
+                  <dd>
+                    <div class="text-2xl font-semibold text-gray-900">
+                      {{ statistics.incomeExpense && statistics.incomeExpense['EXPENSE'] !== undefined ?
+                      formatCurrency(statistics.incomeExpense['EXPENSE']) : '$0.00' }}
+                    </div>
+                  </dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <div class="p-6">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 bg-blue-100 rounded-full p-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="20" x2="12" y2="10"></line>
+                  <line x1="18" y1="20" x2="18" y2="4"></line>
+                  <line x1="6" y1="20" x2="6" y2="16"></line>
+                </svg>
+              </div>
+              <div class="ml-5 w-0 flex-1">
+                <dl>
+                  <dt class="text-sm font-medium text-gray-500 truncate">Net Income</dt>
+                  <dd>
+                    <div class="text-2xl font-semibold"
+                         [ngClass]="{'text-emerald-600': getNetIncome() >= 0,
+                                     'text-red-600': getNetIncome() < 0}">
+                      {{ formatCurrency(getNetIncome()) }}
+                    </div>
+                  </dd>
+                </dl>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Add more stat cards here -->
-    </div>
 
-    <!-- Transactions Table -->
-    <div class="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
-      <div class="p-6 border-b border-zinc-200">
-        <div class="flex items-center justify-between">
-          <h2 class="text-lg font-semibold text-zinc-800">Recent Transactions</h2>
-          <button class="text-zinc-600 hover:text-zinc-800">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-            </svg>
-          </button>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-semibold text-gray-900">Invoice Status</h2>
+            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+              Total: {{ getTotalInvoices() }}
+            </span>
+          </div>
+
+          <div class="space-y-4">
+            <div *ngIf="!statistics?.invoiceStatus || objectKeys(statistics.invoiceStatus).length === 0"
+                 class="text-center py-8 text-gray-500">
+              No invoice data available
+            </div>
+
+            <div *ngFor="let key of objectKeys(statistics.invoiceStatus); let i = index"
+                 class="space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <div class="w-3 h-3 rounded-full mr-2"
+                       [ngStyle]="{'background-color': COLORS[i % COLORS.length]}"></div>
+                  <span class="text-sm font-medium text-gray-700 capitalize">{{ key }}</span>
+                </div>
+                <div class="flex items-center">
+                  <span class="text-sm font-semibold text-gray-900">{{ statistics.invoiceStatus[key] }}</span>
+                  <span class="ml-2 text-xs text-gray-500">
+                    ({{ (statistics.invoiceStatus[key] / getTotalInvoices() * 100).toFixed(1) }}%)
+                  </span>
+                </div>
+              </div>
+
+              <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="h-2.5 rounded-full"
+                     [ngStyle]="{
+                       'width': (statistics.invoiceStatus[key] / getTotalInvoices() * 100) + '%',
+                       'background-color': COLORS[i % COLORS.length]
+                     }"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-semibold text-gray-900">Quote Status</h2>
+            <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+              Total: {{ getTotalQuotes() }}
+            </span>
+          </div>
+
+          <div class="space-y-4">
+            <div *ngIf="!statistics?.quoteStatus || objectKeys(statistics.quoteStatus).length === 0"
+                 class="text-center py-8 text-gray-500">
+              No quote data available
+            </div>
+
+            <div *ngFor="let key of objectKeys(statistics.quoteStatus); let i = index"
+                 class="space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <div class="w-3 h-3 rounded-full mr-2"
+                       [ngStyle]="{'background-color': COLORS[i % COLORS.length]}"></div>
+                  <span class="text-sm font-medium text-gray-700 capitalize">{{ key }}</span>
+                </div>
+                <div class="flex items-center">
+                  <span class="text-sm font-semibold text-gray-900">{{ statistics.quoteStatus[key] }}</span>
+                  <span class="ml-2 text-xs text-gray-500">
+                    ({{ (statistics.quoteStatus[key] / getTotalQuotes() * 100).toFixed(1) }}%)
+                  </span>
+                </div>
+              </div>
+
+              <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="h-2.5 rounded-full"
+                     [ngStyle]="{
+                       'width': (statistics.quoteStatus[key] / getTotalQuotes() * 100) + '%',
+                       'background-color': COLORS[i % COLORS.length]
+                     }"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="overflow-x-auto">
-        <table class="w-full">
-          <thead>
-          <tr class="bg-zinc-50">
-            <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Date</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Description</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Category</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Amount</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">Status</th>
-          </tr>
-          </thead>
-          <tbody class="divide-y divide-zinc-200">
-          <tr *ngFor="let transaction of transactions" class="hover:bg-zinc-50">
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500">
-              {{transaction.date}}
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm font-medium text-zinc-800">{{transaction.description}}</div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500">
-              {{transaction.category}}
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"
-                [ngClass]="{'text-emerald-600': transaction.amount > 0, 'text-red-600': transaction.amount < 0}">
-              {{transaction.amount | currency}}
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-                    <span [ngClass]="{
-                      'bg-emerald-100 text-emerald-800': transaction.status === 'Completed',
-                      'bg-yellow-100 text-yellow-800': transaction.status === 'Pending',
-                      'bg-red-100 text-red-800': transaction.status === 'Failed'
-                    }" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
-                      {{transaction.status}}
-                    </span>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="px-6 py-5 border-b border-gray-200">
+          <h2 class="text-xl font-semibold text-gray-900">Monthly Summary</h2>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Month-Year
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Income
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Expense
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Net
+              </th>
+            </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngIf="!statistics?.monthlySummary || objectKeys(statistics.monthlySummary).length === 0">
+              <td colspan="4" class="px-6 py-8 text-center text-sm text-gray-500">
+                No monthly data available
+              </td>
+            </tr>
+            <tr *ngFor="let month of objectKeys(statistics.monthlySummary)" class="hover:bg-gray-50">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                {{ month }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-emerald-600 font-medium">
+                {{ statistics.monthlySummary[month]['INCOME'] ? formatCurrency(statistics.monthlySummary[month]['INCOME']) : '-' }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600 font-medium">
+                {{ statistics.monthlySummary[month]['EXPENSE'] ? formatCurrency(statistics.monthlySummary[month]['EXPENSE']) : '-' }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"
+                  [ngClass]="{
+                      'text-emerald-600': (statistics.monthlySummary[month]['INCOME'] || 0) - (statistics.monthlySummary[month]['EXPENSE'] || 0) >= 0,
+                      'text-red-600': (statistics.monthlySummary[month]['INCOME'] || 0) - (statistics.monthlySummary[month]['EXPENSE'] || 0) < 0
+                    }">
+                {{ formatCurrency((statistics.monthlySummary[month]['INCOME'] || 0) - (statistics.monthlySummary[month]['EXPENSE'] || 0)) }}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
