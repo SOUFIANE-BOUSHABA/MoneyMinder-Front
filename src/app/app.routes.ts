@@ -22,6 +22,8 @@ import {UpdatePaymentComponent} from "./pages/payments/update-payment/update-pay
 import {GenerateReportComponent} from "./pages/reports/generate-report/generate-report.component";
 import {SubscriptionPlansComponent} from "./pages/subscriptions/subscription-plans/subscription-plans.component";
 import {ManageSubscriptionsComponent} from "./pages/subscriptions/manage-subscriptions/manage-subscriptions.component";
+import {authguardGuard} from "./core/guard/authguard.guard";
+import {roleguardGuard} from "./core/guard/roleguard.guard";
 
 export const routes: Routes = [
 
@@ -35,28 +37,28 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'categories', component: CategoryComponent },
-      { path: 'transactions', component: TransactionsComponent },
-      { path: 'transactions/add', component: AddTransactionComponent },
-      { path: 'transactions/edit/:id', component: UpdateTransactionComponent },
-      { path: 'invoices', component: InvoicesComponent },
-      { path: 'invoices/create', component: AddInvoiceComponent },
-      { path: 'invoices/edit/:id', component: UpdateInvoiceComponent },
-      { path: 'quotes', component: QuotesComponent },
-      { path: 'quotes/create', component: AddQuoteComponent },
-      { path: 'quotes/edit/:id', component: UpdateQuoteComponent },
-      { path: 'payments', component: PaymentsComponent },
-      { path: 'payments/create', component: CreatePaymentComponent },
-      { path: 'payments/edit/:id', component: UpdatePaymentComponent },
+      { path: 'dashboard', component: DashboardComponent , canActivate: [authguardGuard , roleguardGuard],         data: { roles: ['ADMIN', 'USER'] } },
+      { path: 'categories', component: CategoryComponent , canActivate: [authguardGuard , roleguardGuard],         data: { roles: ['ADMIN'] }  },
+      { path: 'transactions', component: TransactionsComponent , canActivate: [authguardGuard , roleguardGuard],   data: { roles: ['ADMIN', 'USER'] }  },
+      { path: 'transactions/add', component: AddTransactionComponent , canActivate: [authguardGuard , roleguardGuard], data: { roles: ['ADMIN', 'USER'] }  },
+      { path: 'transactions/edit/:id', component: UpdateTransactionComponent , canActivate: [authguardGuard , roleguardGuard],  data: { roles: ['ADMIN', 'USER'] } },
+      { path: 'invoices', component: InvoicesComponent , canActivate: [authguardGuard , roleguardGuard],           data: { roles: ['ADMIN', 'USER'] } },
+      { path: 'invoices/create', component: AddInvoiceComponent , canActivate: [authguardGuard , roleguardGuard],  data: { roles: ['ADMIN', 'USER'] } },
+      { path: 'invoices/edit/:id', component: UpdateInvoiceComponent , canActivate: [authguardGuard , roleguardGuard],  data: { roles: ['ADMIN', 'USER'] }  },
+      { path: 'quotes', component: QuotesComponent , canActivate: [authguardGuard , roleguardGuard],               data: { roles: ['ADMIN', 'USER'] }  },
+      { path: 'quotes/create', component: AddQuoteComponent , canActivate: [authguardGuard , roleguardGuard],      data: { roles: ['ADMIN', 'USER'] }  },
+      { path: 'quotes/edit/:id', component: UpdateQuoteComponent , canActivate: [authguardGuard , roleguardGuard], data: { roles: ['ADMIN', 'USER'] }  },
+      { path: 'payments', component: PaymentsComponent , canActivate: [authguardGuard , roleguardGuard],           data: { roles: ['ADMIN', 'USER'] }  },
+      { path: 'payments/create', component: CreatePaymentComponent , canActivate: [authguardGuard , roleguardGuard], data: { roles: ['ADMIN', 'USER'] }  },
+      { path: 'payments/edit/:id', component: UpdatePaymentComponent , canActivate: [authguardGuard , roleguardGuard], data: { roles: ['ADMIN', 'USER'] }  },
 
 
-      { path: 'account', component: AccountComponent },
-      { path: 'reports', component: ReportsComponent },
-      { path: 'reports/create', component: GenerateReportComponent },
+      { path: 'account', component: AccountComponent , canActivate: [authguardGuard , roleguardGuard],             data: { roles: ['ADMIN', 'USER'] }  },
+      { path: 'reports', component: ReportsComponent , canActivate: [authguardGuard , roleguardGuard],             data: { roles: ['ADMIN', 'USER'] }  },
+      { path: 'reports/create', component: GenerateReportComponent  , canActivate: [authguardGuard , roleguardGuard], data: { roles: ['ADMIN', 'USER'] }  },
 
-      { path: 'subscription', component: SubscriptionPlansComponent },
-      { path: 'subscription-request', component: ManageSubscriptionsComponent },
+      { path: 'subscription', component: SubscriptionPlansComponent , canActivate: [authguardGuard , roleguardGuard], data: { roles: ['ADMIN', 'USER'] }  },
+      { path: 'subscription-request', component: ManageSubscriptionsComponent , canActivate: [authguardGuard , roleguardGuard], data: { roles: ['ADMIN'] }  },
     ]
 
   }

@@ -5,6 +5,8 @@ import { of } from 'rxjs';
 import * as AuthActions from './auth.actions';
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
+import {User} from "../../core/models/auth.model";
+import {login, loginFailure, loginSuccess} from "./auth.actions";
 
 @Injectable()
 export class AuthEffects {
@@ -12,19 +14,32 @@ export class AuthEffects {
 
   login$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.login),
+      ofType(login),
       switchMap(({ email, password }) =>
         this.authService.login(email, password).pipe(
-          map((response) => AuthActions.loginSuccess({
-            user: response.user,
-            token: response.accessToken,
-            refreshToken: response.refreshToken
-          })),
-          catchError((error) => of(AuthActions.loginFailure({ error: error.message })))
+          map((response) => {
+            const user: User = {
+              email: email,
+              firstName: response.firstname,
+              lastName: response.lastname,
+              role: response.role,
+            };
+
+            return loginSuccess({
+              user,
+              token: response.accessToken,
+              refreshToken: response.refreshToken,
+            });
+          }),
+          catchError((error) =>
+            of(loginFailure({ error: error?.message || 'Login failed' }))
+          )
         )
       )
     )
   );
+
+
 
   register$ = createEffect(() =>
     this.actions$.pipe(
@@ -41,7 +56,20 @@ export class AuthEffects {
   logout$ = createEffect(() =>
       this.actions$.pipe(
         ofType(AuthActions.logout),
-        tap(() => this.router.navigate(['/login']))
+        tap(() => {
+
+          this.router.navigate(['/login']);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  loginSuccessRedirect$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(AuthActions.loginSuccess),
+        tap(() => {
+          this.router.navigate(['/dashboard']);
+        })
       ),
     { dispatch: false }
   );

@@ -17,7 +17,7 @@
       </button>
     </div>
 
-    <!-- Navigation -->
+
     <nav class="flex-1 px-3 py-4 space-y-1">
       <a routerLink="/dashboard"
          routerLinkActive="bg-zinc-700 text-white"
@@ -28,10 +28,11 @@
         <span [class.hidden]="isCollapsed">Dashboard</span>
       </a>
 
-      <!-- Transactions Section -->
 
 
-      <a routerLink="/categories"
+
+      <a *ngIf="role === 'ADMIN'"
+        routerLink="/categories"
          routerLinkActive="bg-zinc-700 text-white"
          class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-zinc-700 transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -42,7 +43,7 @@
 
 
 
-      <!-- Account -->
+
       <a routerLink="/account"
          routerLinkActive="bg-zinc-700 text-white"
          class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-zinc-700 transition-colors">
@@ -122,7 +123,8 @@
 
 
 
-      <a routerLink="/subscription-request"
+      <a *ngIf="role === 'ADMIN'"
+        routerLink="/subscription-request"
          routerLinkActive="bg-zinc-700 text-white"
          class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-zinc-700 transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -144,10 +146,10 @@
     <div class="p-4 border-t border-zinc-700">
       <a routerLink="/profile"
          class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-zinc-700 transition-colors">
-        <img src="/placeholder-user.jpg" class="h-8 w-8 rounded-full" alt="Profile" />
+        <img src="assets/images/téléchargé.jpg" class="h-8 w-8 rounded-full" alt="Profile" />
         <div [class.hidden]="isCollapsed">
-          <p class="font-medium">John Doe</p>
-          <p class="text-xs text-zinc-400">Administrator</p>
+          <p class="font-medium">{{fullName}}</p>
+          <p class="text-xs text-zinc-400">{{role}}</p>
         </div>
       </a>
     </div>
